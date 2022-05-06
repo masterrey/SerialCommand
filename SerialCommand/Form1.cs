@@ -31,7 +31,16 @@ namespace SerialCommand
             {
                label1.Text=ex.Message;
             }
-            timer1.Enabled = true;
+
+            if (portaserial.IsOpen)
+            {
+                label1.Text = "Connected...";
+                button1.Enabled = false;
+                button2.Enabled = true;
+                button3.Enabled = true;
+                button4.Enabled = true;
+            }
+
 
         }
 
@@ -64,6 +73,24 @@ namespace SerialCommand
         private void button4_Click(object sender, EventArgs e)
         {
             portaserial.WriteLine("LED6 " + trackBar1.Value.ToString());
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (portaserial != null)
+            {
+                portaserial.Close();
+
+
+                if (!portaserial.IsOpen)
+                {
+                    label1.Text = "Closed.";
+                    button1.Enabled = true;
+                    button2.Enabled = false;
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                }
+            }
         }
     }
 }
