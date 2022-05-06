@@ -5,10 +5,12 @@ namespace SerialCommand
     public partial class Form1 : Form
     {
         SerialPort portaserial;
+      
         int potencia = 0;
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -20,7 +22,8 @@ namespace SerialCommand
         {
             portaserial=new SerialPort();
             portaserial.BaudRate = 9600;
-            portaserial.PortName = "COM13";
+            portaserial.PortName = "COM"+numericUpDown1.Value.ToString();
+            
             try
             {
                 portaserial.Open();
@@ -34,12 +37,13 @@ namespace SerialCommand
 
         private void button2_Click(object sender, EventArgs e)
         {
-            portaserial.WriteLine(trackBar1.Value.ToString());
+            portaserial.WriteLine("LED5 "+trackBar1.Value.ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            portaserial.WriteLine("0");
+            portaserial.WriteLine("LED5 0");
+            portaserial.WriteLine("LED6 0");
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -49,12 +53,17 @@ namespace SerialCommand
         //chama a funcao da porta serial a cada 1 seg
         private void timer1_Tick(object sender, EventArgs e)
         {
-            portaserial.WriteLine(trackBar1.Value.ToString());
+       
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            portaserial.WriteLine("LED6 " + trackBar1.Value.ToString());
         }
     }
 }
