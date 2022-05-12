@@ -62,7 +62,25 @@ namespace SerialCommand
         //chama a funcao da porta serial a cada 1 seg
         private void timer1_Tick(object sender, EventArgs e)
         {
-       
+            if (portaserial!=null && portaserial.IsOpen)
+            {
+
+                if (portaserial.BytesToRead > 0) { 
+                        String mensagem = portaserial.ReadLine();
+                    if (mensagem.Contains("BTN"))
+                    {
+
+                        if (mensagem.Substring(4).Contains("1"))
+                        {
+                            checkBox1.Checked = true;
+                        }
+                        if (mensagem.Substring(4).Contains("0"))
+                        {
+                            checkBox1.Checked = false;
+                        }
+                    }
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
